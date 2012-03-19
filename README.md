@@ -61,4 +61,5 @@ The usual method for generating latitude and longitude pairs when using Google M
 Example
 -------
 
-A standalone example using the lopeway.bindingHandlers.maps.Google.v2 is [here](./lopeway.bindingHandlers/blob/master/examples/GoogleMaps.v2.html)
+A standalone example using the lopeway.bindingHandlers.maps.Google.v2 is at (./examples/GoogleMaps.v2.html)
+
