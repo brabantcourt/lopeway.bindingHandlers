@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Bing Maps using Lopeway BindingHandler Bing Maps v1</title>
+    <script charset="UTF-8" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0" type="text/javascript"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.js" type="text/javascript"></script>
+    <style>
+        #map    { width: 650px; height: 512px; }
+        .info   { font-family: Calib,sans-serif; font-size:smaller; }
+    </style>
+</head>
+<body>
+
+    <!-- Bing Maps will generate map within this DIV -->
+    <!-- KnockoutJS Binding Handler (mapsBing) is referenced here by the data-bind attribute -->
+    <!-- config: -->
+    <!-- mapper: -->
+    <div id="map" data-bind="mapsBing: { config: config, mapper: mapper }"></div>
+
+<script type="text/javascript" src="/src/lopeway.utilities.1.0.js"></script>
+<script type="text/javascript" src="/src/lopeway.locations.1.0.js"></script>
+<script type="text/javascript" src="/src/lopeway.bindinghandler.bing.1.0.js"></script>
+<script type="text/javascript">
+/*globals $,jQuery,ko,lopeway,mabbled,viewModel*/
+$(function () {
+
+    "use strict";
+
+    var addrToHtml, addrToString, custToHtml, RedmondWA, viewModel;
+
+    // Dependencies
+    // Add the lopeway.bindingHandler (maps.bing.v1) to the ko.bindingHandlers namespace
+    ko.bindingHandlers.mapsBing = lopeway.bindingHandlers.maps.bing.v1;
+    RedmondWA = lopeway.locations.world.usa.wa.redmond;
+
+    // Helpers
+    custToHtml = function (c) {
+        return "<span class='info'><h4><a href='http://" + c.url + "' alt='" + c.name + "'>" + c.name + "</a></h4><div>" + addrToHtml(c.address) + "</div></span>";
+    };
+    addrToHtml = function (a) {
+        return a.street1;
+    };
+    addrToString = function (a) {
+        return a.street1 + ", " + (a.street2 ? a.street2 + ", " : "") + a.city + " " + a.statecounty + " " + a.postalcode + " " + a.country;
+    };
+
+    // ViewModel
+    viewModel = {
+        config: {
+            // Add your API developer key in place of the null on 'credentials'
+            credentials: null,
+            center: RedmondWA,
+            zoom: 3,
+            width: 1000,
+            height: 512
+        },
+        mapper: {
+            // Augmented by bindingHandler(mapsBing) at applyBindings 'time'
+            // map
+            // markers
+            // addMarker
+            // delMarker
+            // geocode
+        }
+    };
+    ko.applyBindings(viewModel);
+
+    // Invoke using test data
+    $.each([{
+        "name": "Microsoft Corporation",
+        "url": "microsoft.com",
+        "address": {
+            "street1": "One Microsoft Way",
+            "street2": null,
+            "city": "Redmond",
+            "statecounty": "WA",
+            "postalcode": "98052",
+            "country": "USA"
+        },
+        "color": "Red"
+    }, {
+        "name": "Amazon.com, Inc.",
+        "url": "amazon.com",
+        "address": {
+            "street1": "1200 12th Ave. South, Ste. 1200",
+            "city": "Seattle",
+            "statecounty": "WA",
+            "postalcode": "98144-2734",
+            "country": "USA"
+        },
+        "color": "Blue"
+    }, {
+        "name": "Starbucks Corporation",
+        "url": "starbucks.com",
+        "address": {
+            "street1": "2401 Utah Avenue South",
+            "city": "Seattle",
+            "statecounty": "WA",
+            "postalcode": null,
+            "country": "USA"
+        },
+        "color": "Green"
+    }], function (index, c) {
+        viewModel.mapper.geocode({
+            address: addrToString(c.address),
+            success: function (lat, lng) {
+                viewModel.mapper.addMarker({
+                    name: c.name,
+                    info: null,
+                    lat: lat,
+                    lng: lng
+                });
+            }
+        });
+    });
+
+    // Add the White House
+    viewModel.mapper.geocode({
+        address: "1600 Pennsylvania Ave NW  Washington, DC 20500 USA",
+        success: function (lat, lng) {
+            viewModel.mapper.addMarker({
+                name: "White House",
+                info: null,
+                lat: lat,
+                lng: lng
+            });
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>
