@@ -111,8 +111,8 @@ The view model mapper property is augmented with a 'geocode' function that you c
 
 ####Google Maps Binding Handler
 
-A standalone example using the lopeway.bindingHandlers.maps.google.v2 is at [/examples/GoogleMaps.v2.html](./examples/GoogleMaps.v2.html)
+A standalone example using the lopeway.bindingHandlers.maps.google.v2 is at [/examples/GoogleMaps.v2.html](https://github.com/brabantcourt/lopeway.bindingHandlers/blob/master/examples/GoogleMaps.v2.html)
 
 ####Bing Maps Binding Handler
 
-A standalone example using the lopeway.bindingHandlers.maps.bing.v1 is at [/examples/BingMaps.v1.html](./examples/BingMaps.v1.html)
+A standalone example using the lopeway.bindingHandlers.maps.bing.v1 is at [/examples/BingMaps.v1.html](https://github.com/brabantcourt/lopeway.bindingHandlers/blob/master/examples/BingMaps.v1.html)
